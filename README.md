@@ -2,8 +2,8 @@
 This is a data and script repository for Keva et al. 2024 article (Insert DOI here) "Land use drives terrestrial support of boreal lake food webs"
 
 This repository includes:
-Hydrogen isotope values of consumers (omega corrected), sources, trophic discrimination file
-R scripts used to run: MixSIAR, isotope biplots, omega sensitivity analysis figures
+1. Hydrogen isotope values of consumers (omega corrected), sources, trophic discrimination file
+2. R scripts used to run: MixSIAR, isotope biplots, omega sensitivity analysis figures
 
 # Folder Structure
 1. Scripts # includes scripts for figures: isotope biplots, MixSIAR runs, Continous variable plots, Model comparisons, Omega sensitivity analysis
