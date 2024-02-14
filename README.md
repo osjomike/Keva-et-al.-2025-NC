@@ -13,3 +13,6 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 3. MixSIAR stuff: MixSIAR, rjags, R2WinBUGS
 
 Remember to install JAGS as well
+
+# Jags objects
+Jags objects are not stored in this repository as they are too large files (200MB each) One can retreive them by running the MixSIAR script
