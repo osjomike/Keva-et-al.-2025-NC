@@ -17,4 +17,4 @@ Remember to install JAGS as well
 # Jags objects
 Jags objects are not stored in this repository as they are too large files (200MB each). One can retreive them from releases linked to this repository once this repository is made public. Just copy the large .rds objects to the model folders. OR alternatively rerun the MixSIAR code. 
 
-For peer reviewers: unfortunately the github releases are not shown in GitFront mirrored repository. If you really need the large jags models, just rerun the mixSIAR code.
+For peer reviewers: unfortunately the github releases are not shown in GitFront mirrored repository. If you really need the large jags models, just rerun the mixSIAR code. The original GitHub repository will be made public after the manuscript has been accepted.
