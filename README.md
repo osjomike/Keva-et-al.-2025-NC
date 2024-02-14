@@ -4,3 +4,13 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 This repository includes:
 Hydrogen isotope values of consumers (omega corrected), sources, trophic discrimination file
 R scripts used to run: MixSIAR, isotope biplots, omega sensitivity analysis figures
+
+# Folder Structure
+1. Scripts # includes scripts for figures: isotope biplots, MixSIAR runs, Continous variable plots, Model comparisons, Omega sensitivity analysis
+2. Data # Includes consumer omega corrected d2H data, source d2H data, tdf, lake PCA values, lake water d2H values
+3. MixSIAR models # Includes the output folders from mixSIAR analysis
+4. Figures # Includes manuscript figures
+   
+# Packages needed
+
+
