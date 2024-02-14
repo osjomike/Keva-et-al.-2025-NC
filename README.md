@@ -12,8 +12,8 @@ R scripts used to run: MixSIAR, isotope biplots, omega sensitivity analysis figu
 4. Figures # Includes manuscript figures
    
 # Packages needed
-Data arrangement: plyr, dplyr, reshape2 
-Graphics: ggplot2, ggnewscale, cowplot, gridExtra, splancs, ggrepel, ggpubr
-MixSIAR stuff: MixSIAR, rjags, R2WinBUGS
+1. Data arrangement: plyr, dplyr, reshape2 
+2. Graphics: ggplot2, ggnewscale, cowplot, gridExtra, splancs, ggrepel, ggpubr
+3. MixSIAR stuff: MixSIAR, rjags, R2WinBUGS
 
 Remember to install JAGS as well
