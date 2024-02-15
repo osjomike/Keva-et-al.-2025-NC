@@ -4,18 +4,18 @@
 Consumer d2H isotope values used in MixSIAR
 
 Column names and descriptions: 
-Lake = Lake names for each sample
-species = Species or group for each sample
-d15N = consumer d15N values
-TL = Moedelled trophic level of the consumers (base cladocera TP=2.0, TDF of d15N = 3.4)
-For_area = catchment area agriculture area coverage 
-Agr_area = catchment area agriculture area coverage 
-pH = Lake water pH for each lake
-POM_NC_ratio = Lake water POM N:C ratio for each lake
-PC1 = Principal component 1 values for each lake
-PC2 = Principal component 2 values for each lake
-PC3 = Principal component 3 values for each lake
-d2H = omega corrected consumer d2H values
+Lake: Lake names for each sample
+species: Species or group for each sample
+d15N: consumer d15N values
+TL: Moedelled trophic level of the consumers (base cladocera TP=2.0, TDF of d15N = 3.4)
+For_area: catchment area agriculture area coverage 
+Agr_area: catchment area agriculture area coverage 
+pH: Lake water pH for each lake
+POM_NC_ratio: Lake water POM N:C ratio for each lake
+PC1: Principal component 1 values for each lake
+PC2: Principal component 2 values for each lake
+PC3: Principal component 3 values for each lake
+d2H: omega corrected consumer d2H values
 
 # Source data.csv #
   Source d2H value dataframe used in MixSIAR
