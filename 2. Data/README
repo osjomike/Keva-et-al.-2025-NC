@@ -1,0 +1,10 @@
+This Folder includes following files
+
+- Consumer isotope data (Consumer data_w_(value).csv) with different omega values (0, 0.14, 0.23, 0.32). 
+- Source data.csv # Aq and Ter d2H values for each of the lakes
+- tef.csv ## TDF of d2H is set to 0 
+    # To account variability in trophic level base line (cladocera TL=2.0±0.1) (Tanentzap et al., 2017) and 
+    # TDF of nitrogen (3.4±1.0‰) (Post 2002), we added additional uncertainty to δ2Hconsumer, 
+    # ω-corrected (±13‰, based on mean difference of above-mentioned scenarios), 
+-Lake water d2H.csv = data file including the lake water d2H values
+-lake_PCA_scores.csv = data file including the lake water d2H values 
