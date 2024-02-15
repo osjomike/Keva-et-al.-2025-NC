@@ -214,7 +214,7 @@ Comb_fig2<-plot_grid(plot_grid(plotlist = list(legend, ZPL_fig2) , ncol=1, rel_h
 #### Plotting the omega sensitivy analysis, ###### 
 ### Nature quidelines 183 mm (double column) and the full depth of the page is 170 mm. max width=7.2in, height = 6.7in
 #this was the furthest I could get with R at this time, modify axis titles, add y- and x-axis tick labels, subplot group names etc small stuff in vectorgraphics program
-pdf(file="4. Figure/Omega Sensitivity analysis.pdf", 
+pdf(file="4. Figures/Omega Sensitivity analysis.pdf", 
     height = 7, width = 6.5) 
 grid.arrange(Comb_fig2, left = textGrob("Dietary contribution",rot=90, gp = gpar(fontsize = 11)), 
             top= textGrob("Omega Sensitivity analysis" ,gp = gpar(fontsize = 11)),
