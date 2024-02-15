@@ -1,9 +1,6 @@
 # THIS FOLDER INCLUDES # 
-
-# Folders for MixSIAR runs with different covariates (PC1, Forest % or POM NC ratio) and mixSIAR runs with PC1 as covariate and omega values of 0.14 and 0.32 #
-
-The folders and their contents are created with MixSIAR running script (in folder 1. Scripts). 
-Each of the folders contains following objects:
+Folders for MixSIAR runs with different covariates (PC1, Forest % or POM NC ratio) and mixSIAR runs with PC1 as covariate and omega values of 0.14 and 0.32. 
+The folders and their contents are created with MixSIAR running script (in folder 1. Scripts). Each of the folders contains following objects:
 
 -diagnostics.txt # Run diagnostics including e.g. Gweke statistics
 -summary.txt # Summary of posterior results including e.g. epsilon values
