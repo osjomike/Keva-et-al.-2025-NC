@@ -1,8 +1,8 @@
 # This folder includes #
 Article figures as raw files, directly printed from R. I slightly modified them in vectorgraphics program before submission (e.g. subtitles, labels, subplot marigins).
 
-Fig. 2 = Isotope biplots
-Fig. 3 = MixSIAR continous variable plot figure, x-axis = PC1
-
-Extended data Fig 3-4 = MixSIAR continous variable plot figure, x-axis = POM N:C ratio (3) and Forest % (4)
-Extended data Fig 5 = Omega sensitivity analysis
+1. Fig. 2.pdf = Isotope biplots
+2. Fig. 3.pdf = MixSIAR continous variable plot figure, x-axis = PC1
+3. Extended data Fig 3-4.pdf = MixSIAR continous variable plot figure, x-axis = POM N:C ratio (3) and Forest % (4)
+4. Extended data Fig 5.pdf = Omega sensitivity analysis
+5. Linear coefficient with PC1 in ILR space.png = Posterior distribution of Linear coefficient with PC1 in ILR space. 
