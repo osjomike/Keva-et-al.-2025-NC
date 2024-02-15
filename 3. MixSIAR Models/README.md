@@ -2,11 +2,11 @@
 Folders for MixSIAR runs with different covariates (PC1, Forest % or POM NC ratio) and mixSIAR runs with PC1 as covariate and omega values of 0.14 and 0.32. 
 The folders and their contents are created with MixSIAR running script (in folder 1. Scripts). Each of the folders contains following objects:
 
--diagnostics.txt # Run diagnostics including e.g. Gweke statistics
--summary.txt # Summary of posterior results including e.g. epsilon values
--MixSIAR_modelMod with lake+species+(covariate) w_(value).txt # Model description
--discr.object.rds # Discrimination object used in mixSIAR
--mix_object.rds # Consumer mixture object used in mixSIAR
--source.object.rds # Consumer mixture object used in mixSIAR
+1. diagnostics.txt # Run diagnostics including e.g. Gweke statistics
+2. summary.txt # Summary of posterior results including e.g. epsilon values
+3. MixSIAR_modelMod with lake+species+(covariate) w_(value).txt # Model description
+4. discr.object.rds # Discrimination object used in mixSIAR
+5. mix_object.rds # Consumer mixture object used in mixSIAR
+6. source.object.rds # Consumer mixture object used in mixSIAR
 
 Note That jags-objects are not here as they were too large. You can find them from Releases. mixSIAR_model_Mod with lake+species+(covariate) w_(value).rds # jags-object
