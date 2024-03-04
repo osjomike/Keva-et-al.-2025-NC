@@ -7,7 +7,7 @@ Column names and descriptions:
 1. Lake: Lake names for each sample
 2. species: Species or group for each sample
 3. d15N: consumer d15N values
-4. TL: Moedelled trophic level of the consumers (base cladocera TP=2.0, TDF of d15N = 3.4)
+4. TL: Modelled trophic level of the consumers (base cladocera TP=2.0, TDF of d15N = 3.4)
 5. For_area: catchment area agriculture area coverage 
 6. Agr_area: catchment area agriculture area coverage 
 7. pH: Lake water pH for each lake
