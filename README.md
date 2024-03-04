@@ -6,6 +6,8 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 2. Data # Includes consumer omega corrected d2H data, source d2H data, tdf, lake PCA values, lake water d2H values
 3. MixSIAR models # Includes the output folders from mixSIAR analysis
 4. Figures # Includes manuscript figures produced with the given scripts
+
+In each of the folders there are more detailed readme-files
    
 # Packages needed
 1. Data arrangement: plyr, dplyr, reshape2 
