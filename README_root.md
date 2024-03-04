@@ -19,6 +19,8 @@ Jags objects are not stored in this repository as they are too large files (200M
 
 For peer reviewers: unfortunately the github releases are not shown in GitFront mirrored repository. If you really need the large jags models, just rerun the mixSIAR code. The original GitHub repository will be made public after the manuscript has been accepted.
 
+# Licence
+
 Shield: [![CC BY 4.0][cc-by-shield]][cc-by]
 
 This work is licensed under a
