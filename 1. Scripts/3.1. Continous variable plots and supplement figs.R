@@ -1,12 +1,12 @@
 rm(list=ls())
 
 ## Author: Ossi Keva
-## Date 14.2.2024
+## Date 21.5.2024
 ## Project: Roger I Jones -- Allocarb, Antti Eloranta -- FreshRestore
 
 ## Short description: With this script we are plotting the covariate effects on consumer allochthony,
 ## including the lake and species specific posterior distribution 95CI for Terrestrial source
-## Article Figures 3, Extended data Fig 3-4
+## Article Figures 3, Supplementary figures Fig 3-4 & 6, Supplementary table S6
 
 # Some packages to download
 library(plyr) # data arrangement
@@ -27,10 +27,9 @@ my_colours1<-c("lightblue", "brown") ## Same order that occurs in the source fil
 
 ### Typing down The folder names we process
 list.files(file.path(orgfolder, "3. MixSIAR Models"))
-Folders<-c("long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
-           "long_Mod with lake+species_rand+For_area w_0.23_randSlope",
-           "long_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope")
-
+Folders<-c("very long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
+           "very long_Mod with lake+species_rand+For_area w_0.23_randSlope",
+           "very long_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope")
 ### With this loop, we are creating Article Fig 3 for different models (environmental factors)
 ### This produces Continous variable effect on consumer mixtures using plot_cont_var2() function from MixSIAR package (name in MixSIAR: plot_continous_var)
 ### And we supplement this figure with Lake and species specific posterior distributions
@@ -193,7 +192,7 @@ for (f in Folders){
                      aes_string(x=label, ymin="y0.025", ymax="y0.975"), show.legend = FALSE, colour="#7c2020", alpha=0.35)+
       theme_bw() +
       theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
-            panel.grid.minor = element_blank(), panel.background = element_blank(), 
+            panel.grid.minor = element_blank(), panel.background = element_rect(fill="grey100", colour = "grey100"), 
             axis.line = element_line(colour = "black"), 
             axis.text=element_text(size=14),legend.position="none",
             axis.text.x=element_blank(), #remove x axis labels
@@ -201,7 +200,8 @@ for (f in Folders){
             axis.text.y=element_blank(),  #remove y axis labels
             #axis.ticks.y=element_blank(),  #remove y axis ticks
             axis.title = element_blank(),
-            plot.title=element_text(size=10))
+            plot.title=element_text(size=10),
+            plot.background = element_blank())
   }
   legend<-get_legend(ggplot() +
                      geom_line(data=sub_trend, aes(x=x, y=median,group=source,colour=source),size=1.5) +
@@ -209,7 +209,7 @@ for (f in Folders){
                        scale_fill_manual(values = my_colours1, labels=c('Aquatic', 'Terrestrial'), name = "Dietary source")+ ## These are alphabetically orderder by their original labels which are Aq and Ter
                        scale_colour_manual(values = my_colours1, labels=c('Aquatic', 'Terrestrial'), name = "Dietary source")+ 
                        theme(legend.position="right", legend.box = "horizontal", 
-                             legend.background = element_rect(linetype = 2, size = 0.5, colour = 1),
+                             legend.background = element_rect(linetype = 2, linewidth = 0.5, colour = 1),
                              legend.title=element_text(),legend.justification = NULL,
                              legend.margin=margin(c(5,5,5,5)),plot.margin=unit(c(0,0,0,0), units="line")))
   legend1<-plot_grid(legend)
@@ -243,7 +243,7 @@ for (f in Folders){
   dev.off()
   
   
-  #### 1.3 Continous variable plot for speciesthe global plot #######
+  #### 1.3 Continous variable plot for the global plot #######
   #### First we derive continous variable impact on allochthony, this will be exported to a dataframe  
   R2jags::attach.jags(jags)
   n.sources <- source$n.sources
@@ -400,7 +400,7 @@ for (f in Folders){
   
   new_figlist2<-fig_list[fig_order]
   new_figlist2<-append(new_figlist2, list(global_fig+   theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
-                                                              panel.grid.minor = element_blank(), panel.background = element_blank(), 
+                                                              panel.grid.minor = element_blank(), panel.background = element_rect(fill="grey100", colour = "grey100"), 
                                                               axis.line = element_line(colour = "black"), 
                                                               axis.text=element_text(size=14),legend.position="none",
                                                               axis.text.x=element_blank(), #remove x axis labels
@@ -408,8 +408,8 @@ for (f in Folders){
                                                               axis.text.y=element_blank(),  #remove y axis labels
                                                               #axis.ticks.y=element_blank(),  #remove y axis ticks
                                                               axis.title = element_blank(),
-                                                              plot.title=element_text(size=10))), 
-                       after =0)
+                                                              plot.title=element_text(size=10),
+                                                              plot.background = element_blank())), after = 0) 
   comb_fig2<-cowplot::plot_grid(plotlist = new_figlist2, ncol=4)
   
   #### 3.1 Exporting the figure Article figure 3, ###### 
@@ -468,7 +468,7 @@ for (f in Folders){
                                " (", scaleFUN(global_sum[,1]), " – " , scaleFUN(global_sum[,3]), ")")
   max(global_slope)
   global_slopefig<-ggplot(global_slope, aes(x=Slope_ILR))+
-    geom_histogram(aes(y=..density..), binwidth = 0.1, colour="black", fill="white")+
+    geom_histogram(aes(y=after_stat(density)), binwidth = 0.1, colour="black", fill="white")+
     geom_density(fill="#FF6666", alpha=0.5)+ 
     geom_vline(xintercept = 0, linetype="dashed", colour="grey")+
     coord_cartesian(xlim = c(quantile(slopes$Slope_ILR, probs = 0.0001),quantile(slopes$Slope_ILR, probs = 0.9999)), ylim = c(0,4))+
@@ -485,7 +485,7 @@ for (f in Folders){
     slopes_summary_sub<-slopes_summary[slopes_summary$species2==i,]
     
     slope_figs[[i]]<-ggplot(slopes_sub, aes(x=Slope_ILR))+ 
-      geom_histogram(aes(y=..density..), binwidth = 0.1, colour="black", fill="white")+
+      geom_histogram(aes(y=after_stat(density)), binwidth = 0.1, colour="black", fill="white")+
       geom_density(fill="#FF6666", alpha=0.5)+ 
       geom_vline(xintercept = 0, linetype="dashed", colour="grey")+
       coord_cartesian(xlim = c(quantile(slopes$Slope_ILR, probs = 0.0001),quantile(slopes$Slope_ILR, probs = 0.9999)), ylim = c(0,4))+
@@ -540,12 +540,79 @@ for (f in Folders){
   dev.off()
   
   
-  
-
   #### 6.1 Then lets produce Table S6 type for each of the runs #####
 
+  ### Lets extract first ILR intercept
+  ILR_intercept_array<-jags[["BUGSoutput"]][["sims.list"]][["ilr.fac1"]]
+  ILR_intercept_df<-reshape2::melt(ILR_intercept_array)
+  colnames(ILR_intercept_df)<-c("draw", "species", "Source", "distribution")
+  ILR_intercept_df$species<-factor(ILR_intercept_df$species, labels = mix[["FAC"]][[1]][["labels"]])
+  
+  ## Summary statistics for ILR intercept
+  ILR_intercept_sum<-ILR_intercept_df %>%
+    group_by(species) %>%
+    summarise(y0.025 = quantile(distribution, 0.025, na.rm = TRUE),
+              y0.5= quantile(distribution, 0.5, na.rm = TRUE),
+              y0.975= quantile(distribution,0.975, na.rm = TRUE))
+  
+
+  ### Then lets extract the p space intercept
+  p_intercept_array<-jags[["BUGSoutput"]][["sims.list"]][["p.fac1"]]
+  p_intercept_df<-reshape2::melt(p_intercept_array)
+  colnames(p_intercept_df)<-c("draw", "species", "Source", "distribution")
+  p_intercept_df$species<-factor(p_intercept_df$species, labels = mix[["FAC"]][[1]][["labels"]])
+  p_intercept_df$Source<-factor(p_intercept_df$Source, labels = source[["source_names"]])
+  
+  ## Summary statistics for p space intercept, only for Ter source
+  p_intercept_sum<-p_intercept_df[p_intercept_df$Source=="Ter",] %>%
+    group_by(species) %>%
+    summarise(y0.025 = quantile(distribution, 0.025, na.rm = TRUE),
+              y0.5= quantile(distribution, 0.5, na.rm = TRUE),
+              y0.975= quantile(distribution,0.975, na.rm = TRUE))
+  
+  ## Lets create a Table_s6 dataframe and store the summary statistics there
+  ### Slopes summary were already stored to slopes_summary object
+  Table_s6<-data.frame(
+    species=slopes_summary$species2,
+    ILR_Slope=paste0(scaleFUN(slopes_summary$y0.5), " (", scaleFUN(slopes_summary$y0.025)," – ", scaleFUN(slopes_summary$y0.975), ")"),
+    ILR_intercept=paste0(scaleFUN(ILR_intercept_sum$y0.5), " (", scaleFUN(ILR_intercept_sum$y0.025)," – ", scaleFUN(ILR_intercept_sum$y0.975), ")"),
+    p_space_intercept=paste0(scaleFUN(p_intercept_sum$y0.5), " (", scaleFUN(p_intercept_sum$y0.025)," – ", scaleFUN(p_intercept_sum$y0.975), ")")
+  )
+  table_order<-c("Bulk_ZPL", "Chaoborus", "Cladocera" , "Copepods",
+                 "Bulk_BMI_littoral","Asellus_littoral", "Chironomid_littoral",
+                 "Bulk_BMI_profundal", "Chironomid_Profundal", 
+                 "Perch_large" , "Pike" ,
+                 "Perch_small", "Smelt", "Vendace" , "Bleak",
+                 "Perch_medium", "Roach_large", "Roach_small",
+                 "Ruffe")
+  ## Lets re_order the levels and print the table according to them
+  Table_s6$species <- factor(Table_s6$species, levels=table_order)
+  write.table(Table_s6[order(Table_s6$species),], file="Table S6 type.txt")
+   ## For global check quantile(global_slope, probs=c(0.025, 0.5, 0.975)) and check df for p spcae global intercept value. Do ILR transformation for the values to get ILR intercept. 
+
+  
+  ## Lets make another type of table of posterior median results by lake and species
+  colnames(posterior_summary_env)
+  Sup_table7<-posterior_summary_env[posterior_summary_env$Source2=="Ter",c("Lake", "species","y0.5")]
+  
+  Sup_table7$y0.5<-scaleFUN(Sup_table7$y0.5)
+  Sup_table7.1<-reshape2::dcast(species~Lake, data=Sup_table7)
+
+  
+  ### Then lets add global values to the table they were here lake_post_sum_df
+  lake_post_sum_df$y0.5<-scaleFUN(lake_post_sum_df$y0.5)
+  global_l<-reshape2::dcast(data=lake_post_sum_df[lake_post_sum_df$Source2=="Ter",c("Lake2","y0.5")], formula = .~Lake2)
+  global_l2<-cbind(species = "global", global_l[,colnames(global_l) %in% unique(Sup_table7$Lake)])
+  
+  Sup_table7_ready<-rbind(Sup_table7.1, global_l2)
+  Sup_table7_ready$species <- factor(Sup_table7_ready$species, levels=c("global",table_order))
+  write.table(Sup_table7_ready[order(Sup_table7_ready$species),], file="Table S7 type.txt")
+  
+  setwd(orgfolder)
 } # End of f loop  
 
 #########################
 ### END OF THE SCRIPT ###
 #########################
+
+

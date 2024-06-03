@@ -1,11 +1,11 @@
 rm(list=ls())
 
 ## Author: Ossi Keva
-## Date 14.2.2024
+## Date 03.06.2024
 ## Project: Roger I Jones -- Allocarb, Antti Eloranta -- FreshRestore
 
 ## Short description: With this script we are plotting covariate effect on consumer allochthony in different omega scenarios
-## Article Extended data Figure 5
+## Article Supplementary Figure 5
 
 # Some packages to download#
 library(dplyr) # data arrangement
@@ -13,6 +13,7 @@ library(ggplot2) # drawing of plots
 library(cowplot) # get legend and plot arranging
 library(gridExtra) # arranging of plots
 library(MixSIAR) #
+library(grid)
 
 ## Selecting working directory
 setwd("D:\\Keva et al. NC 2024")
@@ -20,19 +21,18 @@ orgfolder<-getwd()
 
 ### Typing down The folder names we process
 list.files()
-Folders<-c("long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
+Folders<-c("very long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
            "long_Mod with lake+species_rand+PC1 w_0.14_randSlope",
            "long_Mod with lake+species_rand+PC1 w_0.32_randSlope")
 
 #Creating a list for data frames
 df_list<-list()
-f=Folders[1]
 ## Running a loop that extract linear coefficient impact on dietary proportions to df_list
-for (f in unique(Folders[1])){
+for (f in unique(Folders)){
   #### 0 Reading some parameters from folder names and reading JAGS objects ####
   env<-sub(".*species_rand\\+(.*)( w_).*", "\\1", f) ## getting the environmental variable name from the model file name
   wtot<-sub(".*w_(.*)(_randSlope).*", "\\1", f) ## getting the used omega value from the model file name
-  setwd(file.path(orgfolder,c("3. MixSIAR Models"), f))
+  setwd(file.path(orgfolder,"3. MixSIAR Models", f))
   list.files()
   
   ### uploading mixtures, sources, discrimination and jags object
@@ -50,8 +50,7 @@ for (f in unique(Folders[1])){
   source_names <- source$source_names
   
   alphaCI=0.05
-  exclude_sources_below=0.001
-  df_list<-list()
+  exclude_sources_below=0.00001
   ce=1
   ### FAC1 is species and FAC2 is lakes, both are random
   ## Here in this loop we are summing up global+rand_slope+species in ILR space to retrieve the continous variable impact
@@ -131,7 +130,7 @@ for (f in unique(Folders[1])){
   source_names <- source$source_names
   
   alphaCI=0.05 ## Set the Credibility interval alpha
-  exclude_sources_below=0.001
+  exclude_sources_below=0.00001
   ce=1
   label <- mix$cont_effects[ce]
   cont <- mix$CE[[ce]]
@@ -204,8 +203,8 @@ my_colours<-c("#EF7F2A", "#A79ECD", "brown")
 
 for(sp in names(df_list)){
   p_df<-do.call("rbind", list(df_list[[sp]][["omega=0.14"]], 
-                              df_list[[sp]][["omega=0.23"]], 
-                              df_list[[sp]][["omega=0.32"]])) 
+                              df_list[[sp]][["omega=0.32"]], 
+                              df_list[[sp]][["omega=0.23"]])) 
 
   p_df$omega<-factor(p_df$omega, levels=omega_order)
   plot_list[[sp]] <- ggplot(data=p_df[which(p_df$source=="Ter"),], aes(x=x,y=median)) +
@@ -220,10 +219,16 @@ for(sp in names(df_list)){
     scale_fill_manual(labels=omega_order, values=my_colours)+
     theme_bw() +
     theme(panel.border = element_blank(), panel.grid.major = element_blank(), 
-                   panel.grid.minor = element_blank(), panel.background = element_blank(), 
-                   axis.line = element_line(colour = "black"), axis.title=element_text(size=16), 
-                   axis.text=element_text(size=14), legend.text=element_text(size=14), legend.position=c(.02,1), 
-                   legend.justification=c(0,1), legend.title = element_blank())
+          panel.grid.minor = element_blank(), panel.background = element_rect(fill="grey100", colour = "grey100"), 
+          axis.line = element_line(colour = "black"), 
+          axis.text=element_text(size=14),legend.position="none",
+          axis.text.x=element_blank(), #remove x axis labels
+          #axis.ticks.x=element_blank(), #remove x axis ticks
+          axis.text.y=element_blank(),  #remove y axis labels
+          #axis.ticks.y=element_blank(),  #remove y axis ticks
+          axis.title = element_blank(),
+          plot.title=element_text(size=10),
+          plot.background = element_blank())
   
 }       
 ## Getting the legend
@@ -253,8 +258,8 @@ comb_fig<-cowplot::plot_grid(plotlist = plot_list[fig_order], ncol=4)
 
 ### Nature quidelines 183 mm (double column) and the full depth of the page is 170 mm. max width=7.2in, height = 6.7in
 #this was the furthest I could get with R at this time, modify axis titles, add y- and x-axis tick labels, subplot group names etc small stuff in vector graphics program
-pdf(file=file.path(#orgfolder, "4. Figures", 
-  paste0(env,"_Continous variable plots with posterior densities_test.pdf")), 
+pdf(file=file.path(orgfolder, "4. Figures", 
+  paste0(env,"_Omega Sensitivity.pdf")), 
   height = 7, width = 6.5) 
 if(grepl("PC1", env)){ ## for some reason grid.arrage did not like the ifs to be inside the function. It messed the figure ratios. Therefore I have now placed it like this. 
   grid.arrange(comb_fig, left = textGrob("Dietary contribution",rot=90, gp = gpar(fontsize = 11)), 
@@ -270,3 +275,19 @@ dev.off()
 #########################
 ### END OF THE SCRIPT ###
 #########################
+
+
+### Test for the graphical abstract
+
+abstract_df<-do.call("rbind", unlist(df_list, recursive = FALSE))
+colnames(abstract_df)
+ggplot()+
+  geom_line(data=abstract_df[abstract_df$source=="Ter" & abstract_df$omega=="0.23" &
+                               abstract_df$species!="Global" ,],
+            aes(x=x, y=median, group = species), colour="grey")+
+  geom_line(data=abstract_df[abstract_df$source=="Ter" & abstract_df$omega=="0.23" &
+                               abstract_df$species=="Global" ,],
+            aes(x=x, y=median), colour = "brown", linewidth=2)+
+  geom_ribbon(data=abstract_df[abstract_df$source=="Ter" & abstract_df$omega=="0.23" &
+                               abstract_df$species=="Global" ,],
+            aes(x=x, ymin=low, ymax=high), fill = "brown", linewidth=2, alpha=0.3)

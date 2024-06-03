@@ -1,7 +1,7 @@
 rm(list = ls()) # clear R's clobal envirnoment memory
 
 ## Author: Ossi Keva
-## Date 14.2.2024
+## Date 03.06.2024
 ## Project: Roger I Jones -- Allocarb, Antti Eloranta -- FreshRestore
 
 ## Short description: With this script we are plotting the "isotope biplots". Article Fig 2.
@@ -13,6 +13,7 @@ library(ggplot2) ## plotting functions
 library(ggnewscale) ## some colour layer functions
 library(cowplot) ## plotting functions
 library(gridExtra) ## plotting functions
+library(grid)
 
 ## Setting working directory
 setwd("D:\\Keva et al. NC 2024") ## Set correct wd here
@@ -21,7 +22,7 @@ orgfolder<-getwd()
 Data_dir<-file.path(orgfolder,"2. Data")
 
 ## downloading some data sets
-consumers<-read.csv2(file = paste0(Data_dir, "/Consumerdata_w_0.23newTP.csv"), sep = ",", dec=".")
+consumers<-read.csv2(file = paste0(Data_dir, "/Consumerdata_w_0.23newTP_2.1.csv"), sep = ",", dec=".")
 sources<-read.csv2(file = paste0(Data_dir, "/Source data.csv"), sep = ",", dec=".")
 Lake_PCA<-read.csv2(file = paste0(Data_dir, "/lake_PCA_scores.csv"), sep = ",", dec=".", fileEncoding = "latin1")
 water<-read.csv2(file = paste0(Data_dir, "/Lake water d2H.csv"), sep = ";", dec=".")  

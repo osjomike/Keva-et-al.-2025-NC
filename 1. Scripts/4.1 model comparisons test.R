@@ -1,10 +1,11 @@
 rm(list=ls())
 
 ## Author: Ossi Keva
-## Date 14.2.2024
+## Date 03.06.2024
 ## Project: Roger I Jones -- Allocarb, Antti Eloranta -- FreshRestore
 
 ## Short description: with this script we are comparing MixSIAR models with different covariates
+## Suppelementary table 8
 
 # Some packages to download
 library(MixSIAR)
@@ -14,13 +15,19 @@ library(ggplot2)
 setwd("D:\\Keva et al. NC 2024")
 orgfolder<-getwd()
 
-folders<-c("long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
-           "long_Mod with lake+species_rand+For_area w_0.23_randSlope",
-           "long_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope")
+folders<-c("very long_Mod with lake+species_rand+PC1 w_0.23_randSlope",
+           "very long_Mod with lake+species_rand+For_area w_0.23_randSlope",
+           "very long_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope",
+           "long_Mod with lake+species w_0.23",
+           "long_Mod with lake w_0.23",
+           "long_empty")
 
 jags.objects<-c("mixSIAR_model_Mod with lake+species_rand+PC1 w_0.23_randSlope.rds",
                 "mixSIAR_model_Mod with lake+species_rand+For_area w_0.23_randSlope.rds",
-                "mixSIAR_model_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope.rds")
+                "mixSIAR_model_Mod with lake+species_rand+POM_NC_ratio w_0.23_randSlope.rds",
+                "mixSIAR_model_Mod with lake+species w_0.23.rds",
+                "mixSIAR_model_Mod with lake w_0.23.rds",
+                "mixSIAR_model_empty.rds")
 
 model_list<-list()
 
@@ -30,9 +37,12 @@ for(i in 1:length(jags.objects)){
   setwd(orgfolder)
 }
 
-names(model_list)<-c("1|species+1|Lake+PC1|species",
-                     "1|species+1|Lake+for|species",
-                     "1|species+1|Lake+POM_NC_ratio|species")
+names(model_list)<-c("PC1+(1+PC1|species)+(1|species)+(1|Lake)",
+                     "For%+(1+For%|species)+(1|species)+(1|Lake)",
+                     "(POM_N:C)+ (1+POM_N:C|species)+(1|species)+(1|Lake)",
+                     "(1|species)+(1|Lake)",
+                     "(1|species)",
+                     "1")
 compare_models(model_list, loo=TRUE)
 #warnings()
 #getAnywhere(compare_models)
@@ -53,6 +63,7 @@ for ( i in 1:nrow(test_data)){
 
 ## We can observe that higher ILR scores indicate higher contribution of test_data[1] values
 ## In our case (manuscript) these higher ILR scores indicate higher aquatic dietary proportion in consumers
+## and lower terrestrial contribution. In the other hand low ILR scores indicate high terrestrial contribution. 
 
 ## Then lets check what is the slope distribution in our model
 PC1<-model_list[[1]]

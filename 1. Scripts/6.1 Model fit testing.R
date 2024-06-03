@@ -1,11 +1,10 @@
 rm(list=ls())
 
 ## Author: Ossi Keva
-## Date 14.2.2024
+## Date 03.06.2024
 ## Project: Roger I Jones -- Allocarb, Antti Eloranta -- FreshRestore
 
-## Short description: With this script we are plotting covariate effect on consumer allochthony in different omega scenarios
-## Article Extended data Figure 5
+## Short description:
 
 # Some packages to download#
 library(dplyr) # data arrangement
@@ -18,13 +17,138 @@ library(MixSIAR) #
 setwd("D:\\Keva et al. NC 2024")
 orgfolder<-getwd()
 list.files()
-f<-"long_Mod with lake+species_rand+PC1 w_0.23_randSlope"
+
+### And upload some data
+f<-c("very long_Mod with lake+species_rand+PC1 w_0.23_randSlope")
 file.path(orgfolder,"3. MixSIAR Models", f, "MixSIAR_modelMod with lake+species_rand+PC1 w_0.23")
 ### uploading mixtures, sources, discrimination and jags object
 mix<-readRDS(file = file.path(orgfolder,"3. MixSIAR Models", f, "mix_object.rds"))
 source<-readRDS(file.path(orgfolder,"3. MixSIAR Models", f, "source_object.rds"))
 discr<-readRDS(file = file.path(orgfolder,"3. MixSIAR Models", f, paste0("discr_object",".rds")))
 jags<-readRDS(file = file.path(orgfolder,"3. MixSIAR Models", f, "mixSIAR_model_Mod with lake+species_rand+PC1 w_0.23_randSlope.rds"))
+
+
+############# Then lets do prectic the consumer tracer values ########
+mixtures <- jags[["BUGSoutput"]][["sims.list"]][["p.ind"]]
+source_means <- source[["MU_array"]]
+source_variances <- source[["SIG2_array"]]  # Variances provided as SIG2_array
+
+# Check dimensions to ensure alignment
+print(dim(source_means))    # Expected: [sources, tracers, lakes]
+print(dim(source_variances)) # Expected: [sources, tracers, lakes]
+print(dim(mixtures))        # Expected: [iterations, consumers, sources]
+
+# Extract lake-specific data
+lakes_p <- mix[["FAC"]][[2]][["values"]]
+
+# Initialize lists to store predictions
+pred_tracer <- list()
+pred_tracer_mean <- list()
+
+# Loop through consumer to calculate predicted tracer values
+for (i in 1:length(lakes_p)) {
+  lake_index <- lakes_p[i]
+  
+  # Initialize matrix to store predicted values for each iteration
+  pred_values <- matrix(0, nrow = dim(mixtures)[1], ncol = dim(source_means)[2])
+  
+  for (tracer in 1:dim(source_means)[2]) {
+    for (source in 1:dim(source_means)[1]) {
+      # Simulate source values using the posterior means and standard deviations
+      simulated_source_values <- rnorm(n = dim(mixtures)[1],
+                                       mean = source_means[source, tracer, lake_index],
+                                       sd = sqrt(source_variances[source, tracer, lake_index]))
+      
+      # Calculate the predicted values for the current tracer by weighting the simulated source values
+      pred_values[, tracer] <- pred_values[, tracer] + mixtures[, i, source] * simulated_source_values
+      ### Question for MAT!  Is this enough or have I missed something?
+    }
+  }
+  
+  # Store the predicted values for the current consumer and store the individual index as well
+  pred_tracer[[i]] <- cbind(pred_values, i)
+  
+  ## This is probably not needed
+  # Calculate the mean of the predicted values for each tracer across iterations
+  pred_tracer_mean[[i]] <- cbind(colMeans(pred_values), i)
+}
+
+
+### First idea is just look how the mean predicted values correlate with the observed isotope values
+predicted_d2h_mean<-do.call("rbind", pred_tracer_mean)
+data_xx<-mix[["data"]]
+data_xx$predicted_d2H<-predicted_d2h_mean[,1]
+
+colnames(data_xx)
+fig_list2<-list()
+for(i in unique(data_xx$species)){
+  data_sub<-data_xx[data_xx$species==i,]
+  linear_model<-lm(d2H~predicted_d2H, data=data_sub)
+  mod_sum<-summary(linear_model)
+
+  fig_list2[[i]]<-ggplot(data=data_sub)+
+    geom_point(aes(x=predicted_d2H, y=d2H))+
+    geom_smooth(method = lm, aes(x=predicted_d2H, y=d2H))+
+    annotate("text", label=paste0("adj.R2 = ", round(mod_sum$adj.r.squared, digits=3)), 
+             x=mean(data_sub$predicted_d2H), y=mean(data_sub$d2H))+
+    labs(title=i)
+  
+}
+## THIS DOES NOT LOOK PROMISING
+
+
+### Second idea is to plot the prediction distributions and plot observed d2H values on top of them
+predicted_d2h<-do.call("rbind", pred_tracer)
+#### Then lets create equally long columns including species and lake columns and cbind them with predicted_d2h
+number.sim=3000
+gg<-cbind(rep(mix[["data"]][["Lake"]], each=number.sim),  
+          rep(mix[["data"]][["species"]], each=number.sim)) 
+colnames(gg)<-c("Lake", "species")
+
+predicted_d2h<-cbind(predicted_d2h, gg)
+
+### Chance the column names and making it a dataframe
+colnames(predicted_d2h)<-c("pred_d2H", "individual","Lake", "species")
+predicted_d2h_df<-as.data.frame(predicted_d2h)
+## Just ensuring that the predicted values are numeric
+predicted_d2h_df$pred_d2H<-as.numeric(predicted_d2h_df$pred_d2H)
+
+## Summary of the predicted tracer values
+predicted_d2h_sum<-predicted_d2h_df %>%
+  group_by(Lake, species) %>%
+  summarise(y0.025 = quantile(pred_d2H, 0.025, na.rm = TRUE),
+            y0.1= quantile(pred_d2H, 0.1, na.rm = TRUE),
+            y0.25= quantile(pred_d2H, 0.25, na.rm = TRUE),
+            y0.375= quantile(pred_d2H, 0.375, na.rm = TRUE),
+            y0.4= quantile(pred_d2H, 0.4, na.rm = TRUE),
+            y0.5= quantile(pred_d2H, 0.5, na.rm = TRUE),
+            y0.625= quantile(pred_d2H, 0.625, na.rm = TRUE),
+            y0.75= quantile(pred_d2H, 0.75, na.rm = TRUE),
+            y0.8= quantile(pred_d2H, 0.8, na.rm = TRUE),
+            y0.9= quantile(pred_d2H, 0.9, na.rm = TRUE),
+            y0.975= quantile(pred_d2H,0.975, na.rm = TRUE))
+predicted_d2h_sum<-as.data.frame(predicted_d2h_sum)
+
+## Lets create a list for the figures
+fig_list3<-list()
+## And make a for loop to store the figures
+for (i in unique(predicted_d2h_sum$species)){
+  data_sub<-predicted_d2h_sum[predicted_d2h_sum$species==i,]
+  fig_list3[[i]]<-ggplot(data=data_sub)+
+    geom_linerange(aes(x=Lake, ymin=y0.025, ymax=y0.975))+
+    geom_point(aes(x=Lake, y=y0.5))+
+    geom_point(inherit.aes = FALSE, data=mix[["data"]][mix[["data"]]$species==i,], aes(x=Lake, y=d2H), shape=8, col="blue")+
+    labs(title=i, y="d2H")+
+    theme(axis.text.x = element_text(angle = 90))
+  
+}
+
+## This looks quite ok, but I think there could be errors in predicting the consumer tracer values
+## For example not sure if just resampling of the source values is enough?? Also I think we should ad the TDF SD to the sources
+## TDF SD is 13
+
+
+### Then we continue with the Kullbeck-leibeir statistics
 
 posterior_array<-jags[["BUGSoutput"]][["sims.list"]][["p.ind"]]
 posterior_df<-reshape2::melt(posterior_array)
@@ -51,8 +175,7 @@ kldiv_rel_matrix<-matrix(data=NA, nrow = length(unique(posterior$Lake)),ncol=len
 
 alpha <- rep(1, source$n.sources) #default prior values
 
-Kullbeck<-function (x1, x2, nbreaks = 100, minx = min(c(x1, x2)), maxx = max(c(x1, x2)), small = 0.01) 
-{
+Kullbeck<-function (x1, x2, nbreaks = 100, minx = min(c(x1, x2)), maxx = max(c(x1, x2)), small = 0.01) {
   dy <- (maxx - minx)/nbreaks
   breaks <- seq(minx, maxx, by = dy)
   x1d <- hist(x1, plot = F, breaks = breaks)
@@ -163,3 +286,52 @@ ggplot(box)+
   labs(y="Marginal Kullnack-Leibler \n divergence (gained information in bits)", x=NULL)+
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 write.csv(kldiv_matrix, file="PC1_long_model_Kldivmatrix.csv")
+
+
+############ THEN SOME ALTERNATIVE STUFF: MC FADDEN PSEUDO R2 #### NOT SURE IF THIS IS VALID AT ALL
+
+setwd("D:\\Keva et al. NC 2024")
+orgfolder<-getwd()
+list.files()
+full<-"test_Mod with lake+species_rand+PC1 w_0.23_randSlope"
+full<-"long_Mod with lake+species_rand+PC1 w_0.23_randSlope"
+empty<-"test_empty"
+
+### uploading mixtures, sources, discrimination and jags object
+jags_empty<-readRDS(file = file.path(orgfolder,empty, "mixSIAR_model_empty.rds"))
+jags_full<-readRDS(file = file.path(orgfolder,full, "mixSIAR_model_Mod with lake+species_rand+PC1 w_0.23_randSlope.rds"))
+mix<-readRDS(file=file.path(orgfolder, empty, "mix_object.rds"))
+
+#### McFadden Pseudo R2 value for each individual
+loglik_EMPTY<-jags_empty[["BUGSoutput"]][["sims.list"]][["loglik"]]
+loglik_FULL<-jags_full[["BUGSoutput"]][["sims.list"]][["loglik"]]
+dim(loglik_EMPTY)
+dim(loglik_FULL)
+
+### McFadden, D. (1987). Regression-based specification tests for the multinomial logit model. Journal of econometrics, 34(1-2), 63-82.
+PseudoR<-list()
+for (i in 1:1737){
+  PseudoR[[i]]<-1-(loglik_FULL[1:1500,i]/loglik_EMPTY[,i])
+}
+PseudoR_df<-do.call("rbind", PseudoR)
+melted_df<-reshape2::melt(PseudoR_df)
+colnames(melted_df)<-c("Ind", "Draw", "PseudoR")
+
+
+## Extracting the simulation individual names and lakes, multiplying them with n.sims
+number.sim<-jags_full[["BUGSoutput"]][["n.sims"]]
+number.sources<-2
+gg<-cbind(rep(mix[["data"]][["Lake"]], times=number.sim),  # times=2 indicates number of sources
+          rep(mix[["data"]][["species"]], times=number.sim)) # times=2 indicates number of sources
+colnames(gg)<-c("Lake", "species")
+PseudoR_df_env<-cbind(melted_df, gg)
+library(ggplot2)
+ggplot(data=PseudoR_df_env[PseudoR_df_env$PseudoR>-1 & PseudoR_df_env$PseudoR<2,], aes(x=PseudoR))+ 
+  facet_wrap(~species, scales = "free_y")+
+  geom_histogram(aes(y=..density..), binwidth = 0.1, colour="black", fill="white")+
+  geom_density(fill="#FF6666", alpha=0.5)+ 
+  labs(y="Scaled density", x="McFadde pseudo R2")+
+  theme_classic()+
+  theme(axis.text.y = element_blank(),
+        plot.title=element_text(size=10))
+
