@@ -588,31 +588,11 @@ for (f in Folders){
   ## Lets re_order the levels and print the table according to them
   Table_s6$species <- factor(Table_s6$species, levels=table_order)
   write.table(Table_s6[order(Table_s6$species),], file="Table S6 type.txt")
-   ## For global check quantile(global_slope, probs=c(0.025, 0.5, 0.975)) and check df for p spcae global intercept value. Do ILR transformation for the values to get ILR intercept. 
+   ## For global check quantile(global_slope, probs=c(0.025, 0.5, 0.975)) and check df for p spcae global intercept value. Do ILR transformation for the values to get Global ILR intercept. 
 
-  
-  ## Lets make another type of table of posterior median results by lake and species
-  colnames(posterior_summary_env)
-  Sup_table7<-posterior_summary_env[posterior_summary_env$Source2=="Ter",c("Lake", "species","y0.5")]
-  
-  Sup_table7$y0.5<-scaleFUN(Sup_table7$y0.5)
-  Sup_table7.1<-reshape2::dcast(species~Lake, data=Sup_table7)
-
-  
-  ### Then lets add global values to the table they were here lake_post_sum_df
-  lake_post_sum_df$y0.5<-scaleFUN(lake_post_sum_df$y0.5)
-  global_l<-reshape2::dcast(data=lake_post_sum_df[lake_post_sum_df$Source2=="Ter",c("Lake2","y0.5")], formula = .~Lake2)
-  global_l2<-cbind(species = "global", global_l[,colnames(global_l) %in% unique(Sup_table7$Lake)])
-  
-  Sup_table7_ready<-rbind(Sup_table7.1, global_l2)
-  Sup_table7_ready$species <- factor(Sup_table7_ready$species, levels=c("global",table_order))
-  write.table(Sup_table7_ready[order(Sup_table7_ready$species),], file="Table S7 type.txt")
-  
   setwd(orgfolder)
 } # End of f loop  
 
 #########################
 ### END OF THE SCRIPT ###
 #########################
-
-
