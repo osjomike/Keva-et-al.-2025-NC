@@ -1,4 +1,5 @@
 ## This folder includes ##
+
 - 1.1 Isotope Biplot.R (R Script producing isotope biplots for each of the consumer groups)
 - 2.1 running MixSIAR.R (R Script to run the bayesian dietary source model (MixSIAR) and save the output to folder (3. Mix SIAR Models))
 - 3.1 Continous variable plots with posterior densities.R (R Script producing Figure with continous variable effect on each consumer allochthony,in addition to slope distributions and species+lakes posterior densities)
