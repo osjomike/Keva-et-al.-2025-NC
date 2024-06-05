@@ -7,7 +7,7 @@ Column names and descriptions:
 1. Lake: Lake names for each sample
 2. species: Species or group for each sample
 3. d15N: consumer d15N values
-4. TL: Moedelled trophic level of the consumers (base cladocera TP=2.0, TDF of d15N = 3.4 for ZPL and fish; asellus TP 2.0 TDF 3.4 for Benthos)
+4. TL: Moedelled trophic level of the consumers (base cladocera TP=2.1, TDF of d15N = 3.4 for ZPL, profundal benthos and fish; asellus TP 2.1 TDF 3.4 for Littoral Benthos)
 5. For_area: catchment area agriculture area coverage 
 6. Agr_area: catchment area agriculture area coverage 
 7. pH: Lake water pH for each lake
@@ -25,6 +25,8 @@ Column names and descriptions:
 2. Lake: Lake names for each sample
 3. Meand2H: d2H values for each lake and source
 4. SDd2H: standard deviation for each sample. This is derived from spatiotemporal sampling of four lakes and applied to all lakes.
+
+There are also Source data2.csv that includes modelled source values based on the Source data.csv. This Source data2.csv was used only when running the empty MixSIAR model (e.g. Table S6). 
     
 # tef.csv ## 
 Trophic discrimination factors for d2H used in MixSIAR
@@ -32,7 +34,7 @@ Trophic discrimination factors for d2H used in MixSIAR
 Column names and descriptions:
 1. Row names: Source identifier Aq (benthic algae) and Ter (inlet DOM) 
 2. meand2H: TDF of d2H, set to 0 
- SDd2H: TDF SD is set to 13‰: To account variability in trophic level base line (cladocera TL=2.0±0.1 & asellus TL=2.0±0.1) (Tanentzap et al., 2017) and TDF of nitrogen (3.4±1.0‰) (Post 2002), 
+ SDd2H: TDF SD is set to 13‰: To account variability in trophic level base line (cladocera TL=2.1±0.1 & asellus TL=2.1±0.1) (Tanentzap et al., 2017) and TDF of nitrogen (3.4±1.0‰) (Post 2002), 
  we added additional uncertainty to consumer d2H values (±13‰, based on mean difference of above-mentioned scenarios), following a recent study (Vane et al., 2023)
 
 # Lake water d2H.csv # 
