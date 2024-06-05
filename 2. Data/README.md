@@ -1,6 +1,6 @@
 # This Folder includes following files # 
 
-# Consumer data_w_(value).csv) # values in c(0, 0.14, 0.23, 0.32). 
+# Consumer data_w_(value).csv # values in c(0, 0.14, 0.23, 0.32). 
 Consumer d2H isotope values used in MixSIAR
 
 Column names and descriptions: 
