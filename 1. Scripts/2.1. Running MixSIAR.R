@@ -144,8 +144,8 @@ for (mod in c(n.mod[3:8],n.mod[1:2])){
   ## Lets make separate folders for each of the models and save our results there
   mainDir <- getwd()
   subDir <- paste0(run,"_",  mod)
-  dir.create(file.path(mainDir, subDir), showWarnings = FALSE)
-  setwd(file.path(mainDir, subDir))
+  dir.create(file.path(mainDir,"3. MixSIAR Models", subDir), showWarnings = FALSE)
+  setwd(file.path(mainDir,"3. MixSIAR Models", subDir))
   
   ### Test if the model have no continous effect
   if(is.null(mix[[mod]][["cont_effects"]])){ ## If model does not have cont, then do this
@@ -160,7 +160,7 @@ for (mod in c(n.mod[3:8],n.mod[1:2])){
     ## We have manually modified "MixSIAR_random_continuous_model_v.1.txt" to include random slope effect, 
     ## We have also manually modified run_model2()-function to be able to print the added random slope effects to jags.mod
     jags.mod <- run_model2(run=run, mix[[mod]], source[[mod]], discr[[mod]], model_filename = 
-                             file.path(orgfolder,"MixSIAR_random_continuous_model_v.1.txt"), alpha.prior=1,
+                             file.path(orgfolder, "3. MixSIAR Models","MixSIAR_random_continuous_model_v.1.txt"), alpha.prior=1,
                            process_err = TRUE, resid_err = TRUE)}
   
   ## Lets save the jags object for further purposes
