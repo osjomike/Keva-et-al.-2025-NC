@@ -23,8 +23,7 @@ library(rjags)
 library(MixSIAR)
 
 ### 1.2. Setting working directory ####
-#setwd("\\\\fileservices.ad.jyu.fi/commonshare/bio-AlloCarb/Manuscripts/Ossi's project, FreshRestore, Allocarb/R and data/2TL model/jags-juttuja/MIXSIAR runs with w corrected data")
-setwd("D:\\Ossi Keva")
+setwd("D:\\Keva et al. NC 2024")
 orgfolder<-getwd()
 list.files()
 
