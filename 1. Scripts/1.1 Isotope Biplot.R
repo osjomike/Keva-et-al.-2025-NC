@@ -18,7 +18,7 @@ library(grid)
 ## Setting working directory
 setwd("D:\\Keva et al. NC 2024") ## Set correct wd here
 orgfolder<-getwd()
-## Patch for data
+## Path for data
 Data_dir<-file.path(orgfolder,"2. Data")
 
 ## downloading some data sets
