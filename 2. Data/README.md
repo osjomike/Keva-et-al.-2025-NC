@@ -1,7 +1,7 @@
 # This Folder includes following files # 
 
 # Consumer data_w_(value).csv # values in c(0, 0.14, 0.23, 0.32). 
-Consumer d2H isotope values used in MixSIAR
+Consumer d2H isotope values used in MixSIAR and raw d2H values of the samples (w=0)
 
 Column names and descriptions: 
 1. Lake: Lake names for each sample
@@ -38,7 +38,7 @@ Column names and descriptions:
  we added additional uncertainty to consumer d2H values (±13‰, based on mean difference of above-mentioned scenarios), following a recent study (Vane et al., 2023)
 
 # Lake water d2H.csv # 
-data file including the lake water d2H values
+data file including the lake water d2H values, benthic algae d2H values and inlet DOM d2H values
 
 Column names and descriptions:  
 1. Lake: Lake names for each sample
