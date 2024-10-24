@@ -79,7 +79,7 @@ for(mod in unique(n.mod)){
                                       data_type="means",
                                       mix[[mod]])
   
-  discr[[mod]] <- load_discr_data(filename="2. Data/tef.csv", mix[[mod]]) # tef5 d2H discrimination 0, tef6 d2H discrimination sd is =-13 based on d15N TDF 3.4=-1 and clado base 2.0=-0.1 impacts on environmental water corrected d2H values
+  discr[[mod]] <- load_discr_data(filename="2. Data/tef.csv", mix[[mod]]) # tef d2H discrimination sd is =-13 based on d15N TDF 3.4=-1 and clado base 2.0=-0.1 impacts on environmental water corrected d2H values
 }
 
 
