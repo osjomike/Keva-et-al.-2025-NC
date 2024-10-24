@@ -17,11 +17,14 @@ Column names and descriptions:
 11. PC3: Principal component 3 values for each lake
 12. d2H: omega corrected consumer d2H values
 
-# Source data.csv #
-Source d2H value dataframe used in MixSIAR
+# Source data.csv, Source data_epi.csv, Source data_bacw17.csv #
+Source d2H value dataframes used in MixSIAR
 
 Column names and descriptions:  
-1. Row names: Source identifier Aq (benthic algae) and Ter (inlet DOM) 
+1. Row names: Source identifier Aq and Ter
+    Source data.csv : Aq = modelled phytoplankton d2H values, Ter=inlet DOM d2H values
+    Source data_epi.csv : Aq = benthic algae d2H values, Ter=inlet DOM d2H values
+    Source data_bacw17.csv : Aq = modelled phytoplankton d2H values, Ter= modelled bacterial d2H values
 2. Lake: Lake names for each sample
 3. Meand2H: d2H values for each lake and source
 4. SDd2H: standard deviation for each sample. This is derived from spatiotemporal sampling of four lakes and applied to all lakes.
@@ -37,12 +40,16 @@ Column names and descriptions:
  SDd2H: TDF SD is set to 13‰: To account variability in trophic level base line (cladocera TL=2.1±0.1 & asellus TL=2.1±0.1) (Tanentzap et al., 2017) and TDF of nitrogen (3.4±1.0‰) (Post 2002), 
  we added additional uncertainty to consumer d2H values (±13‰, based on mean difference of above-mentioned scenarios), following a recent study (Vane et al., 2023)
 
-# Lake water d2H.csv # 
-data file including the lake water d2H values, benthic algae d2H values and inlet DOM d2H values
+# Lake water d2H and source values.csv # 
+data file including the lake water d2H values, benthic algae d2H values, inlet DOM d2H values, modelled bacterial and phytoplankton d2H values
 
 Column names and descriptions:  
 1. Lake: Lake names for each sample
 2. d2H_water_center: d2H values of the analysed lake water
+3. d2H_benthic_algae: d2H values of the analysed benthic algae samples
+4. d2H_DOM: d2H values of the analysed inlet DOM samples
+5. d2H_bact_w017_modelled: the modelled bacterial d2H values with omega value of 0.17 (Based on Fogela et al., 2016 table 1 mean value)
+6. d2H_phyto_modelled: the modelled algal d2H values with fractination value of 109.7 (based on the mean difference between water and benthic algae d2H values)
 
 # lake_PCA_scores.csv # 
 data file including the lake water d2H values used in isotope Biplots script
