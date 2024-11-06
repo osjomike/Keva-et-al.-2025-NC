@@ -159,7 +159,7 @@ for (mod in c(n.mod[3:8],n.mod[1:2])){
     ## We have manually modified "MixSIAR_random_continuous_model_v.1.txt" to include random slope effect, 
     ## We have also manually modified run_model2()-function to be able to print the added random slope effects to jags.mod
     jags.mod <- run_model2(run=run, mix[[mod]], source[[mod]], discr[[mod]], model_filename = 
-                             file.path(orgfolder,"MixSIAR_random_continuous_model_v.1.txt"), alpha.prior=1,
+                           file.path(orgfolder,"3. MixSIAR Models", "MixSIAR_random_continuous_model_v.1.txt"), alpha.prior=1,
                            process_err = TRUE, resid_err = TRUE)}
   
   ## Lets save the jags object for further purposes
