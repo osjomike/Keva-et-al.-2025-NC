@@ -23,7 +23,7 @@ library(rjags)
 library(MixSIAR)
 
 ### 1.2. Setting working directory ####
-sesetwd("D:\\Keva et al. NC 2024")
+setwd("D:\\Keva et al. NC 2024")
 orgfolder<-getwd()
 list.files()
 
