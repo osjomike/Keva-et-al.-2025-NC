@@ -9,8 +9,7 @@ Each of the subfolders contains following objects:
 3. discr.object.rds # Discrimination object used in mixSIAR
 4. mix_object.rds # Consumer mixture object used in mixSIAR
 5. source.object.rds # Consumer mixture object used in mixSIAR
-6. mixSIAR_model_Mod with lake+species+(covariate) w_(value).rds # jags-object including posterior results
-7. MixSIAR_modelMod with lake+species w_(value).txt # JAGS Model description (ONLY FOR Species or Species+Lake Models)
+6. MixSIAR_modelMod with lake+species w_(value).txt # JAGS Model description (ONLY FOR Species or Species+Lake Models)
 
 FOR Models including a continous covariate the JAGS model .txt file is in the 3. MixSIAR Models folder roots.
 THIS is a custom JAGS script that includes Random Slope for factor 1. in our case random slope for each species. NOTE That it works only with the given model structure and is not a dynamic object.
