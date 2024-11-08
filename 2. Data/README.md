@@ -22,9 +22,9 @@ Source d2H value dataframes used in MixSIAR
 
 Column names and descriptions:  
 1. Row names: Source identifier Aq and Ter
-    1.1. Source data.csv : Aq = modelled phytoplankton d2H values, Ter=inlet DOM d2H values
-    1.2. Source data_epi.csv : Aq = benthic algae d2H values, Ter=inlet DOM d2H values
-    1.3. Source data_bacw17.csv : Aq = modelled phytoplankton d2H values, Ter= modelled bacterial d2H values
+    #1.1. Source data.csv : Aq = modelled phytoplankton d2H values, Ter=inlet DOM d2H values
+    #1.2. Source data_epi.csv : Aq = benthic algae d2H values, Ter=inlet DOM d2H values
+    #1.3. Source data_bacw17.csv : Aq = modelled phytoplankton d2H values, Ter= modelled bacterial d2H values
 3. Lake: Lake names for each sample
 4. Meand2H: d2H values for each lake and source
 5. SDd2H: standard deviation for each sample. This is derived from spatiotemporal sampling of four lakes and applied to all lakes.
