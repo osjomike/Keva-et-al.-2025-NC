@@ -17,9 +17,7 @@ In each of the folders there are more detailed readme-files
 Remember to install JAGS as well
 
 # Mixiar jags model objects
-The Mixiar jags model objects (output of run_model()-function) are not stored in this repository as they are too large files (200MB each). One can retreive them from "Releases" linked to this repository once this repository is made public.
-
-For peer reviewers: unfortunately the github releases are not shown in GitFront mirrored repository. If you really need the large jags models, just rerun the mixSIAR code. The original GitHub repository will be made public after the manuscript has been accepted.
+The Mixiar jags model objects (output of run_model()-function) are stored in this repository through "Releases" linked to this repository.
 
 # Licence
 
