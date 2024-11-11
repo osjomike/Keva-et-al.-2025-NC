@@ -17,7 +17,7 @@ In each of the folders there are more detailed readme-files
 Remember to install JAGS as well
 
 # Mixiar jags model objects
-The Mixiar jags model objects (output of run_model()-function) are stored in this repository through "Releases" linked to this repository.
+The Mixiar jags model objects (output of run_model()-function) are stored in this repository through "Releases" feature.
 
 # Licence
 
