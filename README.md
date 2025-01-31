@@ -10,11 +10,11 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 In each of the folders there are more detailed readme-files
 
 # Packages needed
-1. Data arrangement: plyr, dplyr, reshape2 
+1. Data arrangement: plyr, dplyr (version: 1.1.0), reshape2 
 2. Graphics: ggplot2, ggnewscale, cowplot, gridExtra, splancs, ggrepel, ggpubr
-3. MixSIAR stuff: MixSIAR, rjags, R2WinBUGS
+3. MixSIAR stuff: MixSIAR (version: ), rjags, R2WinBUGS
 
-Remember to install JAGS as well
+Remember to install JAGS as well (e.g. 4.3.0)
 
 # Mixiar jags model objects
 The Mixiar jags model objects (output of run_model()-function) are stored in this repository through "Releases" feature.
