@@ -23,7 +23,7 @@ Data_dir<-file.path(orgfolder,"2. Data")
 
 ## downloading some data sets
 consumers<-read.csv2(file = paste0(Data_dir, "/Consumerdata_w_0.23newTP_2.1.csv"), sep = ",", dec=".")
-sources<-read.csv2(file = paste0(Data_dir, "/sourcedata_frac.csv"), sep = ",", dec=".")
+sources<-read.csv2(file = paste0(Data_dir, "/Source Data_frac.csv"), sep = ",", dec=".")
 Lake_PCA<-read.csv2(file = paste0(Data_dir, "/lake_PCA_scores.csv"), sep = ",", dec=".", fileEncoding = "latin1")
 water<-read.csv2(file = paste0(Data_dir, "/Lake water d2H and source values.csv"), sep = ";", dec=".")  
 
@@ -42,15 +42,11 @@ water$Lake<-chartr("äÄö", "aAo", water$Lake)
 ## Renaming some variables
 water$Source<-"water"
 water$Meand2H<-water$"d2H_water_center"
-water$SDd2H<-0 ## Setting water d2H SD to 0
-
-## Subsetting water dataframe the files has other lakes as well.
-lakes<-unique(Lake_PCA$Lake)
-water_sub<-water[which(water$Lake %in% lakes),]
+water$SDd2H<-NA ## Making SD column to water dataframe to make plotting easier
 
 #colnames(sources)
 source_water<-dplyr::bind_rows(sources[c("Lake", "Source","Meand2H", "SDd2H")], 
-                               water_sub[c("Lake", "Source","Meand2H", "SDd2H")])
+                               water[c("Lake", "Source","Meand2H", "SDd2H")])
 
 source_water_PC<-merge(x=source_water, y=Lake_PCA, by="Lake")
 
