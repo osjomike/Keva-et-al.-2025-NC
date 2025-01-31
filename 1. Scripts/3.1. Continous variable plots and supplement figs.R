@@ -152,8 +152,8 @@ for (f in Folders){
   #library(dplyr)
   ### Calculating summary statistics from posterior results
   posterior_summary<-posterior %>%
-    group_by(Lake, species, Source2) %>%
-    summarise(y0.025 = quantile(distribution, 0.025, na.rm = TRUE),
+    dplyr::group_by(Lake, species, Source2) %>%
+    dplyr::summarise(y0.025 = quantile(distribution, 0.025, na.rm = TRUE),
               y0.1= quantile(distribution, 0.1, na.rm = TRUE),
               y0.25= quantile(distribution, 0.25, na.rm = TRUE),
               y0.375= quantile(distribution, 0.375, na.rm = TRUE),
