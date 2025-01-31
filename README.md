@@ -10,7 +10,7 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 In each of the folders there are more detailed readme-files
 
 # Packages needed
-1. Data arrangement: plyr, dplyr (version: 1.1.0), reshape2 
+1. Data arrangement: plyr (e.g. version: 1.1.4), dplyr (version: 1.1.0), reshape2 (version: 1.1.4) 
 2. Graphics: ggplot2, ggnewscale, cowplot, gridExtra, splancs, ggrepel, ggpubr
 3. MixSIAR stuff: MixSIAR (version: ), rjags, R2WinBUGS
 
