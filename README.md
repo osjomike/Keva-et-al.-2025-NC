@@ -10,9 +10,9 @@ This is a data and script repository for Keva et al. 2024 article (Insert DOI he
 In each of the folders there are more detailed readme-files
 
 # Packages needed
-1. Data arrangement: plyr (e.g. version: 1.1.4), dplyr (version: 1.1.0), reshape2 (version: 1.1.4) 
-2. Graphics: ggplot2, ggnewscale, cowplot, gridExtra, splancs, ggrepel, ggpubr
-3. MixSIAR stuff: MixSIAR (version: ), rjags, R2WinBUGS
+1. Data arrangement: plyr (version: 1.1.4), dplyr (1.1.0), reshape2 (1.1.4) 
+2. Graphics: ggplot2 (3.4.1), ggnewscale (0.5.0), cowplot (1.1.3), gridExtra (2.3), splancs(2.01-45), ggrepel (0.9.6), ggpubr (0.6.0)
+3. MixSIAR stuff: MixSIAR (3.1.12), rjags (4-16), R2WinBUGS (2.1-22.1)
 
 Remember to install JAGS as well (e.g. 4.3.0)
 
