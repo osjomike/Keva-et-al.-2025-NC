@@ -592,7 +592,7 @@ for (f in Folders){
   write.table(Table_s6[order(Table_s6$species),], file="Table S6 type.txt")
    ## For global check quantile(global_slope$Slope_ILR, probs=c(0.025, 0.5, 0.975))
    ## for p spacae global intercept value quantile(jags[["BUGSoutput"]][["sims.list"]][["p.global"]][,2], probs=c(0.025, 0.5, 0.975))
-   ## For ILR space intercept: do ILR transformation of the p space intercept
+   ## For GLobal ILR space quantile(jags[["BUGSoutput"]][["sims.list"]][["ilr.global"]], probs=c(0.025, 0.5, 0.975))
 
   
   setwd(orgfolder)
