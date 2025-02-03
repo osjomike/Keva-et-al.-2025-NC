@@ -1,5 +1,5 @@
 # Keva-et-al.-2024---NC
-This is a data and script repository for Keva et al. 2024 article (Insert DOI here) "Land use drives terrestrial support of boreal lake food webs"
+This is a data and script repository for Keva et al. article (Insert DOI here) "The role of land use in terrestrial support of boreal lake food webs "
 
 # This repository includes (Folder structure):
 1. Scripts # includes scripts for figures: isotope biplots, MixSIAR runs, Continous variable plots, Model comparisons, Omega sensitivity analysis
